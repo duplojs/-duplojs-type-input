@@ -6,11 +6,11 @@
   "repository": "https://github.com/duplojs/duplojs-type-input",
   "license": "ISC",
   "keywords": [],
-  "types": "./types/scripts/.ts",
+  "types": "./types/index.d.ts",
   "exports": {
     "default": {
-      "import": "./dist/.mjs",
-      "require": "./dist/.cjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     }
   },
   "files": [
@@ -24,12 +24,9 @@
     "dev": "nodemon --exec 'ts-node --transpiler sucrase/ts-node-plugin test'",
     "build": "rollup --config && npx tsc"
   },
-  "dependencies": {
-    "@duplojs/duplojs": ">=0.13.23"
-  },
   "devDependencies": {
     "@duplojs/worker-testing": "^0.1.5",
-    "@rollup/plugin-json": "^6.0.1",
+    "@duplojs/duplojs": ">=0.13.23",
     "@types/node": "^18.15.11",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
