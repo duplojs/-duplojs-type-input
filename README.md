@@ -21,18 +21,15 @@ typeInput.id(1); // {name: "id", value: 1}
 typeInput.firstname("mathcovax"); // {name: "firstname", value: "mathcovax"}
 typeInput.ageAndWeight({age: 21, weight: 74}); // {name: "ageAndWeight", value: {age: 21, weight: 74}}
 
-const duplo = Duplo({port: 1506, host: "localhost"});
+const duplo = Duplo({port: 1506, host: "localhost", environment: "DEV"});
 
-const testChecker = duplo.createChecker(
-    "testChecker",
-    {
-        handler({name, value}: GetTypeInput<typeof typeInput>, output){
-            if(name === "id") return output("info1", value);
-            else return output("info2", value);
-        },
-        outputInfo: ["info1", "info2"]
-    }
-);
+const testChecker = duplo
+.createChecker("testChecker")
+.handler(({name, value}: GetTypeInput<typeof typeInput>, output) => {
+	if(name === "id") return output("info1", value);
+	else return output("info2", value);
+})
+.build();
 
 duplo.declareRoute("GET", "/")
 .check(

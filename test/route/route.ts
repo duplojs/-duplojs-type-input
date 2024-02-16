@@ -2,23 +2,20 @@ import Duplo, {zod} from "@duplojs/duplojs";
 import {parentPort} from "worker_threads";
 import {createTypeInput, GetTypeInput} from "../../scripts";
 
-const duplo = Duplo({port: 1506, host: "localhost"});
+const duplo = Duplo({port: 1506, host: "localhost", environment: "DEV"});
 
 const testTypeInput = createTypeInput()
 .add<"id", number>()
 .add<"firstName", string>()
 .build();
 
-const testChecker = duplo.createChecker(
-	"testChecker",
-	{
-		handler({name, value}: GetTypeInput<typeof testTypeInput>, output){
-			if(name === "id") return output("info1", value);
-			else return output("info2", value);
-		},
-		outputInfo: ["info1", "info2"]
-	}
-);
+const testChecker = duplo
+.createChecker("testChecker")
+.handler(({name, value}: GetTypeInput<typeof testTypeInput>, output) => {
+	if(name === "id") return output("info1", value);
+	else return output("info2", value);
+})
+.build();
 
 duplo.declareRoute("GET", "/test/1")
 .check(
